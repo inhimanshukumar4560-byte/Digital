@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>I digital preneur | Empowering Business Growth with Digital Services</title>
+  
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Cloudinary Video Player CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cloudinary-video-player/1.10.5/cld-video-player.min.css" rel="stylesheet">
+  
+  <!-- Custom Tailwind Config for New Yellow Theme -->
+  <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              /* New Brand Theme Colors */
+              'theme-yellow': '#FFC107',       // Primary Yellow (Amber 400)
+              'theme-yellow-dark': '#FFA000',    // Darker Yellow for hover (Amber 600)
+              'theme-yellow-light': '#FFF8E1',  // Light Yellow for surfaces (Amber 50)
+              
+              /* Google Accent Colors (kept for variety) */
+              'google-red': '#EA4335',
+              'google-yellow': '#FBBC05',
+              'google-green': '#34A853',
+              
+              /* Surface & Text Colors */
+              'google-bg': '#FFFFFF',
+              'google-surface': '#F8F9FA',
+              'google-surface-alt': '#E8F0FE', // This can be replaced with theme-yellow-light where needed
+              'google-border': '#DADCE0',
+              'google-text': '#202124',
+              'google-text-light': '#5F6368',
+            },
+            fontFamily: {
+              'sans': ['"Product Sans"', 'Inter', 'system-ui', 'sans-serif'],
+            },
+            boxShadow: {
+              'google': '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
+              'google-hover': '0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15)',
+              'google-subtle': '0 1px 2px 0 rgba(60,64,67,0.1), 0 1px 3px 1px rgba(60,64,67,0.05)',
+            }
+          }
+        }
+      }
+    </script>
+    
+  <style data-purpose="custom-typography">
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      
+      /* Simulating Google's Product Sans for specific headers if system fonts fail */
+      @font-face {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Open Sans'), local('Inter'), local('Segoe UI');
+      }
+
+      .serif-italic {
+        font-family: serif;
+        font-style: italic;
+      }
+      
+      /* New Custom Scrollbar hider for pricing cards */
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      
+      /* Scrollbar styling for inside the card */
+      .card-scroll::-webkit-scrollbar {
+        width: 4px;
+      }
+      .card-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .card-scroll::-webkit-scrollbar-thumb {
+        background-color: #DADCE0;
+        border-radius: 10px;
+      }
+  </style>
+  
+  <!-- CSS for Scrolling Marquee Animation -->
+  <style data-purpose="scrolling-marquee-animation">
+      .marquee-row {
+        overflow: hidden;
+        display: flex;
+        -webkit-mask-image: linear-gradient(to right, transparent, white 5%, white 95%, transparent);
+        mask-image: linear-gradient(to right, transparent, white 5%, white 95%, transparent);
+      }
+      .marquee-content {
+        display: flex;
+        flex-shrink: 0;
+        gap: 0.75rem; /* 12px gap between images */
+        justify-content: space-around;
+        min-width: 100%;
+      }
+      .marquee-content img {
+        height: 10rem; /* 160px */
+        width: auto;
+        object-fit: cover;
+        border-radius: 0.5rem; /* rounded-lg */
+        flex-shrink: 0;
+        box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3);
+        border: 1px solid #DADCE0;
+      }
+      @keyframes scroll-left {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(calc(-100% - 0.75rem));
+        }
+      }
+      @keyframes scroll-right {
+        from {
+          transform: translateX(calc(-100% - 0.75rem));
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+      .animate-scroll-left {
+        animation: scroll-left 45s linear infinite;
+      }
+      .animate-scroll-right {
+        animation: scroll-right 45s linear infinite;
+      }
+
+      /* Custom styles for new image slider */
+      .image-slider-container {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
+      .image-slider-container::-webkit-scrollbar {
+        display: none;
+      }
+  </style>
+  
+  <!-- CSS for Tools Text Marquee -->
+  <style data-purpose="tools-text-marquee">
+      .text-marquee-wrapper {
+        overflow: hidden;
+        display: flex;
+        -webkit-mask-image: linear-gradient(to right, transparent, white 5%, white 95%, transparent);
+        mask-image: linear-gradient(to right, transparent, white 5%, white 95%, transparent);
+        white-space: nowrap;
+      }
+      .text-marquee-container {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        min-width: max-content;
+      }
+      .text-marquee-item {
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: #5F6368;
+        margin: 0 1.25rem;
+        display: inline-flex;
+        align-items: center;
+        letter-spacing: 0.025em;
+      }
+      .text-marquee-item span {
+        color: #FFC107; /* UPDATED from blue to yellow */
+        margin-right: 0.5rem;
+        font-size: 1.25rem;
+      }
+      @keyframes text-scroll-left {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+      @keyframes text-scroll-right {
+        from { transform: translateX(-50%); }
+        to { transform: translateX(0); }
+      }
+      .animate-text-left {
+        animation: text-scroll-left 40s linear infinite;
+      }
+      .animate-text-right {
+        animation: text-scroll-right 40s linear infinite;
+      }
+  </style>
+</head>
+<body class="bg-google-bg text-google-text font-sans antialiased">
+  <!-- BEGIN: Navigation -->
+  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-google-border px-4 py-4 flex justify-between items-center shadow-sm">
+    <div class="flex items-center">
+      <!-- LOGO IMPLEMENTATION -->
+      <div class="flex flex-col items-start justify-center cursor-pointer">
+        <div class="text-[24px] font-bold tracking-tight flex items-center leading-none select-none text-google-text">
+          I digital <span class="text-theme-yellow">preneur</span>
+        </div>
+        <div class="text-[0.45rem] font-bold tracking-[0.2em] text-google-text-light mt-[3px] uppercase ml-1">Marketing & Growth Agency</div>
+      </div>
+      <!-- END LOGO IMPLEMENTATION -->
+    </div>
+    
+    <div class="flex items-center gap-4">
+      <!-- DYNAMIC BLOG BUTTON (Hidden by default, shown by Firebase) -->
+      <a id="dynamic-blog-btn" href="#" target="_blank" class="hidden text-google-text font-bold hover:text-theme-yellow transition-colors text-sm px-2">
+        Blog
+      </a>
+      <a href="https://wa.me/918976409215?text=Hi%20Himanshu,%20I'm%20interested%20in%20your%20Result-Oriented%20Solutions." target="_blank" class="bg-theme-yellow text-google-text font-bold py-2 px-5 rounded-full text-sm hover:bg-theme-yellow-dark hover:shadow-google transition-all">
+        Get Result-Oriented Solutions
+      </a>
+      <button class="text-google-text-light hover:text-google-text transition-colors" id="open-menu-btn" data-purpose="mobile-menu-toggle">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 6h16M4 12h16m-7 6h7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <!-- END: Navigation -->
+
+  <!-- BEGIN: NEW MOBILE MENU OVERLAY -->
+  <div id="mobile-menu" class="hidden fixed inset-0 z-[100] bg-white text-google-text flex flex-col font-sans overflow-y-auto">
+    <!-- Top Bar -->
+    <div class="bg-white px-4 py-4 flex justify-between items-center text-google-text sticky top-0 z-10 border-b border-google-border">
+      
+      <div class="flex flex-col items-start justify-center cursor-pointer">
+        <div class="text-[24px] font-bold tracking-tight flex items-center leading-none text-google-text">
+          I digital preneur
+        </div>
+      </div>
+
+      <button id="close-menu-btn" class="text-google-text-light hover:text-google-text transition-colors">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Menu Links -->
+    <div class="px-5 py-2 flex-grow pb-10">
+      <ul class="text-[15px] font-medium text-google-text">
+        
+        <!-- SERVICES MENU ITEM -->
+        <li class="border-b border-google-border flex flex-col">
+          <div class="py-4 flex justify-between items-center cursor-pointer w-full hover:text-theme-yellow transition-colors" onclick="toggleMenu('services-content', 'services-icon')">
+            Our Services
+            <svg id="services-icon" class="w-4 h-4 text-google-text-light transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </div>
+          <div id="services-content" class="hidden flex-col gap-4 pb-6 pt-2 w-full pl-4 bg-google-surface rounded-lg px-4 mb-2">
+            <a href="#" class="font-normal text-google-text hover:text-theme-yellow pt-2">Website Development</a>
+            <a href="#" class="font-normal text-google-text hover:text-theme-yellow">Digital Marketing</a>
+            <a href="#" class="font-normal text-google-text hover:text-theme-yellow">Lead Generation</a>
+            <a href="#" class="font-normal text-google-text hover:text-theme-yellow">BPO Services</a>
+            <a href="#" class="font-normal text-google-text hover:text-theme-yellow pb-2">AI Automation & Chatbots</a>
+          </div>
+        </li>
+
+        <!-- PRICING & WHY US -->
+        <li class="border-b border-google-border py-4 cursor-pointer hover:text-theme-yellow transition-colors">Pricing</li>
+        <li class="border-b border-google-border py-4 cursor-pointer hover:text-theme-yellow transition-colors">Why Choose Us?</li>
+        <li class="border-b border-google-border py-4 cursor-pointer hover:text-theme-yellow transition-colors">Get Free Audit</li>
+        <!-- DYNAMIC MOBILE BLOG BTN -->
+        <li id="dynamic-mobile-blog-btn" class="hidden border-b border-google-border py-4 cursor-pointer hover:text-theme-yellow transition-colors">
+            <a href="#" target="_blank" class="w-full block">Blog</a>
+        </li>
+        
+      </ul>
+
+      <!-- Bottom Buttons -->
+      <div class="mt-8 flex flex-col gap-3">
+        <a href="https://wa.me/918976409215?text=Hi%20Himanshu,%20I'd%20like%20to%20start%20my%20Result-Oriented%20Solutions." target="_blank" class="text-center bg-theme-yellow text-google-text font-bold py-3 px-4 rounded-full text-sm w-full hover:bg-theme-yellow-dark hover:shadow-google transition-all">
+          Get Result-Oriented Solutions
+        </a>
+        <a href="https://wa.me/918976409215?text=Hi%20Himanshu,%20I'm%20interested%20in%20learning%20more." target="_blank" class="text-center bg-transparent border border-google-border text-theme-yellow font-medium py-3 px-4 rounded-full text-sm w-full hover:bg-google-surface transition-colors">
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- END: NEW MOBILE MENU OVERLAY -->
+
+  <!-- BEGIN: Hero Section -->
+  <header class="relative px-6 pt-12 pb-16 overflow-hidden bg-white">
+    <div class="relative z-10 max-w-6xl mx-auto flex flex-col items-center text-center">
+      
+      <!-- Minimal Text Area (Text Updated per request) -->
+      <h1 class="text-4xl md:text-5xl font-semibold leading-tight mb-6 text-google-text tracking-tight max-w-3xl">
+        Skyrocket Your Business with <span class="text-theme-yellow">Result-Oriented Solutions</span>
+      </h1>
+      <a href="https://wa.me/918976409215?text=Hi%20Himanshu,%20I%20want%20to%20get%20Result-Oriented%20Solutions!" target="_blank" class="inline-block bg-theme-yellow text-google-text font-bold py-3 px-8 rounded-full text-lg hover:bg-theme-yellow-dark hover:shadow-google transition-all mb-8">
+        Get Result-Oriented Solutions
+      </a>
+
+      <!-- VIDEO REMOVED AS PER REQUEST -->
+
+    </div>
+    
+    <!-- Image Scrolling Marquee -->
+    <div class="mt-6 space-y-4">
+      <!-- Row 1: Scrolls Left -->
+      <div class="marquee-row">
+        <div class="marquee-content animate-scroll-left">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop" alt="Marketing Dashboard">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop" alt="Team Collaboration">
+          <img src="https://images.unsplash.com/photo-1559526324-c1f275fbfa32?w=400&h=300&fit=crop" alt="Project Management">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=300&fit=crop" alt="Business Growth">
+          <img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?w=400&h=300&fit=crop" alt="Data Analytics">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop" alt="Website Performance">
+          <!-- Duplicate Set -->
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop" alt="Marketing Dashboard">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop" alt="Team Collaboration">
+          <img src="https://images.unsplash.com/photo-1559526324-c1f275fbfa32?w=400&h=300&fit=crop" alt="Project Management">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=300&fit=crop" alt="Business Growth">
+          <img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?w=400&h=300&fit=crop" alt="Data Analytics">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop" alt="Website Performance">
+        </div>
+      </div>
+      <!-- Row 2: Scrolls Right -->
+      <div class="marquee-row">
+        <div class="marquee-content animate-scroll-right">
+          <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&h=300&fit=crop" alt="Client Meeting">
+          <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=400&h=300&fit=crop" alt="E-commerce Success">
+          <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=400&h=300&fit=crop" alt="Web Design">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop" alt="Digital Strategy">
+          <img src="https://i.ibb.co/0ydBwSs8/file-00000000a12c71faac3225712fc1acbe.png" alt="Customer Support">
+          <img src="https://images.unsplash.com/photo-1579389083046-e3df9c2b3325?w=400&h=300&fit=crop" alt="Growth Chart">
+          <!-- Duplicate Set -->
+          <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&h=300&fit=crop" alt="Client Meeting">
+          <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=400&h=300&fit=crop" alt="E-commerce Success">
+          <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=400&h=300&fit=crop" alt="Web Design">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop" alt="Digital Strategy">
+          <img src="https://i.ibb.co/0ydBwSs8/file-00000000a12c71faac3225712fc1acbe.png" alt="Customer Support">
+          <img src="https://images.unsplash.com/photo-1579389083046-e3df9c2b3325?w=400&h=300&fit=crop" alt="Growth Chart">
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- END: Hero Section -->
+
+  <!-- BEGIN: "Our Projects" Slider Section (Image + Link) -->
+  <section class="bg-white py-16 px-6 overflow-hidden border-t border-google-border">
+    <div class="max-w-6xl mx-auto mb-10">
+      <h2 class="text-3xl md:text-4xl font-semibold text-google-text text-center tracking-tight mb-4">Our <span class="text-theme-yellow">Projects</span></h2>
+      <p class="text-center text-google-text-light text-sm md:text-base max-w-2xl mx-auto">Explore our portfolio of result-oriented projects. Scroll through to see our latest work and click any image to view it in full screen.</p>
+    </div>
+
+    <div class="relative max-w-6xl mx-auto group">
+      <!-- Scroll Left Button -->
+      <button onclick="scrollSlider('projects-slider', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-white/90 shadow-google hover:bg-google-surface border border-google-border rounded-full w-12 h-12 flex items-center justify-center opacity-80 hover:opacity-100 transition-all text-theme-yellow">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+      </button>
+
+      <!-- Scroll Right Button -->
+      <button onclick="scrollSlider('projects-slider', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white/90 shadow-google hover:bg-google-surface border border-google-border rounded-full w-12 h-12 flex items-center justify-center opacity-80 hover:opacity-100 transition-all text-theme-yellow">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+
+      <!-- Dynamic Projects Container -->
+      <div id="projects-slider" class="flex overflow-x-auto gap-6 snap-x snap-mandatory image-slider-container px-2 py-4">
+        <!-- Prototypes Removed: Will be populated by Firebase -->
+      </div>
+    </div>
+  </section>
+  <!-- END: "Our Projects" Slider Section -->
+
+  <!-- BEGIN: "Why Choose Us" Slider Section (Image Only) -->
+  <section class="bg-google-surface py-16 px-6 overflow-hidden border-t border-google-border">
+    <div class="max-w-6xl mx-auto mb-10">
+      <h2 class="text-3xl md:text-4xl font-semibold text-google-text text-center tracking-tight mb-4">Why <span class="text-theme-yellow">Choose Us</span></h2>
+      <p class="text-center text-google-text-light text-sm md:text-base max-w-2xl mx-auto">Discover what makes I digital preneur the perfect growth partner for your business.</p>
+    </div>
+
+    <div class="relative max-w-6xl mx-auto group">
+      <!-- Scroll Left Button -->
+      <button onclick="scrollSlider('why-choose-slider', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-white/90 shadow-google hover:bg-google-surface border border-google-border rounded-full w-12 h-12 flex items-center justify-center opacity-80 hover:opacity-100 transition-all text-theme-yellow">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+      </button>
+
+      <!-- Scroll Right Button -->
+      <button onclick="scrollSlider('why-choose-slider', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white/90 shadow-google hover:bg-google-surface border border-google-border rounded-full w-12 h-12 flex items-center justify-center opacity-80 hover:opacity-100 transition-all text-theme-yellow">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+
+      <!-- Dynamic Why Choose Us Container -->
+      <div id="why-choose-slider" class="flex overflow-x-auto gap-6 snap-x snap-mandatory image-slider-container px-2 py-4">
+        <!-- Prototypes Removed: Will be populated by Firebase -->
+      </div>
+    </div>
+  </section>
+  <!-- END: "Why Choose Us" Slider Section -->
+
+  <!-- Fullscreen Image Modal -->
+  <div id="fullscreen-modal" class="hidden fixed inset-0 z-[200] bg-black/95 backdrop-blur-md flex flex-col items-center justify-center">
+    
+    <!-- Controls Bar -->
+    <div class="absolute top-0 left-0 w-full p-4 flex justify-between items-center z-[210] bg-gradient-to-b from-black/50 to-transparent">
+      <div class="flex gap-4">
+        <button onclick="zoomImage(0.2)" class="text-white hover:text-theme-yellow bg-white/10 p-2 rounded-full transition-colors" title="Zoom In">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+        </button>
+        <button onclick="zoomImage(-0.2)" class="text-white hover:text-theme-yellow bg-white/10 p-2 rounded-full transition-colors" title="Zoom Out">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"></path></svg>
+        </button>
+        <button onclick="resetZoom()" class="text-white hover:text-theme-yellow bg-white/10 p-2 rounded-full transition-colors text-sm font-bold px-4" title="Reset Zoom">Reset</button>
+      </div>
+      <button onclick="closeFullscreenImage()" class="text-white hover:text-google-red bg-white/10 p-2 rounded-full transition-colors" title="Close">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+
+    <!-- Image Container -->
+    <div class="w-full h-full flex items-center justify-center p-4 overflow-auto">
+      <img id="fullscreen-img-element" src="" class="max-w-full max-h-full object-contain transition-transform duration-200" style="transform: scale(1);">
+    </div>
+  </div>
+
+  <!-- BEGIN: Tech & Tools Marquee -->
+  <section class="bg-google-surface py-12 px-6 overflow-hidden border-t border-b border-google-border">
+    <p class="text-google-text-light text-center text-sm font-semibold mb-8 uppercase tracking-widest">POWERED BY INDUSTRY-LEADING TECHNOLOGY</p>
+    
+    <div class="mt-8 space-y-6">
+      <!-- Row 1: Scrolling Left -->
+      <div class="text-marquee-wrapper">
+        <div class="text-marquee-container animate-text-left">
+          <div class="flex items-center">
+            <div class="text-marquee-item"><span>✦</span> Google Ads</div>
+            <div class="text-marquee-item"><span>✦</span> Meta Ads</div>
+            <div class="text-marquee-item"><span>✦</span> SEO & SEM</div>
+            <div class="text-marquee-item"><span>✦</span> WordPress</div>
+            <div class="text-marquee-item"><span>✦</span> Shopify</div>
+            <div class="text-marquee-item"><span>✦</span> AI Chatbots</div>
+            <div class="text-marquee-item"><span>✦</span> Lead Generation</div>
+            <div class="text-marquee-item"><span>✦</span> High-Ticket Sales</div>
+          </div>
+          <div class="flex items-center">
+            <div class="text-marquee-item"><span>✦</span> Google Ads</div>
+            <div class="text-marquee-item"><span>✦</span> Meta Ads</div>
+            <div class="text-marquee-item"><span>✦</span> SEO & SEM</div>
+            <div class="text-marquee-item"><span>✦</span> WordPress</div>
+            <div class="text-marquee-item"><span>✦</span> Shopify</div>
+            <div class="text-marquee-item"><span>✦</span> AI Chatbots</div>
+            <div class="text-marquee-item"><span>✦</span> Lead Generation</div>
+            <div class="text-marquee-item"><span>✦</span> High-Ticket Sales</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Scrolling Right -->
+      <div class="text-marquee-wrapper mt-4">
+        <div class="text-marquee-container animate-text-right">
+           <div class="flex items-center">
+            <div class="text-marquee-item"><span>✦</span> Funnel Building</div>
+            <div class="text-marquee-item"><span>✦</span> E-commerce Solutions</div>
+            <div class="text-marquee-item"><span>✦</span> CRM Integration</div>
+            <div class="text-marquee-item"><span>✦</span> Performance Marketing</div>
+            <div class="text-marquee-item"><span>✦</span> Content Strategy</div>
+            <div class="text-marquee-item"><span>✦</span> Webflow</div>
+            <div class="text-marquee-item"><span>✦</span> Custom Web Apps</div>
+            <div class="text-marquee-item"><span>✦</span> Analytics & Reporting</div>
+          </div>
+          <div class="flex items-center">
+            <div class="text-marquee-item"><span>✦</span> Funnel Building</div>
+            <div class="text-marquee-item"><span>✦</span> E-commerce Solutions</div>
+            <div class="text-marquee-item"><span>✦</span> CRM Integration</div>
+            <div class="text-marquee-item"><span>✦</span> Performance Marketing</div>
+            <div class="text-marquee-item"><span>✦</span> Content Strategy</div>
+            <div class="text-marquee-item"><span>✦</span> Webflow</div>
+            <div class="text-marquee-item"><span>✦</span> Custom Web Apps</div>
+            <div class="text-marquee-item"><span>✦</span> Analytics & Reporting</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-20 max-w-5xl mx-auto text-center px-4">
+      <h2 class="text-4xl font-semibold mb-6 text-google-text tracking-tight">
+        I digital preneur is not just an agency, <span class="text-theme-yellow">it's your growth partner.</span>
+      </h2>
+      <p class="text-lg text-google-text-light mb-12 max-w-3xl mx-auto leading-relaxed">
+        From custom Website Development and high-converting Digital Marketing to qualified Lead Generation and BPO services—we provide the ultimate growth ecosystem. I digital preneur transforms your business goals into unstoppable digital reality.
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <a href="https://ibb.co/pHkynGZ" target="_blank" class="block rounded-2xl overflow-hidden shadow-google transition-transform duration-500 hover:scale-[1.02] border border-google-border">
+          <img src="https://i.ibb.co/cWsLxMt/file-000000001bdc72089a351a684c097342.png" alt="Project Showcase 1" class="w-full h-auto object-cover">
+        </a>
+        <a href="https://ibb.co/tPJY0Yjh" target="_blank" class="block rounded-2xl overflow-hidden shadow-google transition-transform duration-500 hover:scale-[1.02] border border-google-border">
+          <img src="https://i.ibb.co/VpqMFMnN/file-00000000e0587208b8a5007ee6e4983a.png" alt="Project Showcase 2" class="w-full h-auto object-cover">
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- END: Tech & Tools Marquee -->
+
+  <!-- Container for dynamically added Service Categories from Firebase -->
+  <!-- Hardcoded prototypes removed as requested, UI entirely fetched from Firebase -->
+  <div id="dynamic-services-container"></div>
+
+  <!-- BEGIN: Value Proposition Section -->
+  <section class="py-20 px-6 bg-white border-b border-google-border">
+    <div class="max-w-6xl mx-auto">
+        <span class="text-theme-yellow text-xs font-bold uppercase tracking-widest block mb-4">A New Way of Working</span>
+        <h2 class="text-3xl md:text-4xl font-semibold mb-8 text-google-text tracking-tight">
+          The Growth Engine Your <span class="text-theme-yellow">Business is Missing</span>
+        </h2>
+        
+        <div class="relative rounded-2xl overflow-hidden aspect-video bg-black flex items-center justify-center w-full shadow-google border border-google-border" data-purpose="video-player">
+          <video
+            id="player"
+            class="cld-video-player cld-video-player-skin-dark w-full h-full object-cover"
+            playsinline
+          ></video>
+        </div>
+
+        <p class="mt-8 text-google-text-light text-lg max-w-4xl">
+          I digital preneur is your dedicated, on-demand growth team. We expand your marketing capacity and extend your team's capabilities without the overhead of a full-time hire.
+        </p>
+    </div>
+  </section>
+  <!-- END: Value Proposition -->
+
+  <!-- BEGIN: Why Choose I digital preneur Section -->
+  <section class="py-20 px-6 bg-google-surface text-google-text border-b border-google-border">
+    <div class="text-center max-w-4xl mx-auto mb-16">
+      <span class="text-xs font-bold uppercase tracking-widest text-google-text-light block mb-4">Why Choose I digital preneur?</span>
+      <h2 class="text-3xl md:text-4xl font-semibold leading-tight tracking-tight">
+        Super-fast. Result-driven. Completely Risk-Free. Work with a growth partner that's purposefully <span class="text-theme-yellow">built to deliver.</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      
+      <!-- Card 1: Yellow Accent -->
+      <div class="rounded-2xl overflow-hidden bg-white flex flex-col border border-google-border border-t-4 border-t-theme-yellow shadow-subtle hover:shadow-google-hover transition-shadow">
+        <img src="https://i.ibb.co/0ydBwSs8/file-00000000a12c71faac3225712fc1acbe.png" alt="Free Trial" class="w-full h-64 object-cover border-b border-google-border">
+        <div class="p-8 flex-grow">
+          <h3 class="text-2xl text-theme-yellow mb-4 tracking-tight">Zero Risk, <span class="font-bold">Result-Oriented Trial</span></h3>
+          <p class="text-sm text-google-text-light leading-relaxed">Don't pay a single rupee until you see our work. Experience our marketing strategies and lead generation for 2 days, absolutely free. No commitments.</p>
+        </div>
+      </div>
+      
+      <!-- Card 2: Red Accent -->
+      <div class="rounded-2xl overflow-hidden bg-white flex flex-col border border-google-border border-t-4 border-t-google-red shadow-subtle hover:shadow-google-hover transition-shadow">
+        <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=600&h=400&fit=crop" alt="No Advance Payment" class="w-full h-64 object-cover border-b border-google-border">
+        <div class="p-8 flex-grow">
+          <h3 class="text-2xl text-google-red mb-4 tracking-tight">No Advance <span class="font-bold">Payment</span></h3>
+          <p class="text-sm text-google-text-light leading-relaxed">We believe in building trust through results. You start your project with zero upfront cost and only pay after you see tangible outcomes.</p>
+        </div>
+      </div>
+      
+      <!-- Card 3: Green Accent -->
+      <div class="rounded-2xl overflow-hidden bg-white flex flex-col border border-google-border border-t-4 border-t-google-green shadow-subtle hover:shadow-google-hover transition-shadow">
+        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&h=400&fit=crop" alt="Guaranteed Results" class="w-full h-64 object-cover border-b border-google-border">
+        <div class="p-8 flex-grow">
+          <h3 class="text-2xl text-google-green mb-4 tracking-tight">Guaranteed Results <span class="font-bold">in 48 Hours</span></h3>
+          <p class="text-sm text-google-text-light leading-relaxed">Stop waiting weeks for results. Our expert team, powered by AI and proven strategies, delivers measurable progress in as little as 48 hours.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- END: Why Choose I digital preneur Section -->
+
+  <!-- BEGIN: Stats Section (Success in Numbers) -->
+  <section class="py-20 px-6 bg-white border-b border-google-border">
+    <div class="text-center mb-16">
+      <span class="text-google-text-light text-xs font-bold uppercase tracking-widest block mb-4">Success in Numbers</span>
+      <h2 class="text-3xl md:text-4xl font-semibold text-google-text tracking-tight">The best return on <span class="text-theme-yellow">your investment</span></h2>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 max-w-5xl mx-auto text-left">
+      <div class="border-t border-google-border pt-8">
+        <div class="text-6xl font-light tracking-tighter text-theme-yellow mb-4">500+</div>
+        <p class="text-sm text-google-text-light leading-relaxed">Startups, enterprises and mid-market companies trust I digital preneur to scale their growth and deliver high-quality leads.</p>
+      </div>
+      <div class="border-t border-google-border pt-8">
+        <div class="text-6xl font-light tracking-tighter text-google-red mb-4">10k+</div>
+        <p class="text-sm text-google-text-light leading-relaxed">Verified leads generated for our clients to date, and counting.</p>
+      </div>
+      <div class="border-t border-google-border pt-8">
+        <div class="text-6xl font-light tracking-tighter text-google-yellow mb-4">48 Hrs</div>
+        <p class="text-sm text-google-text-light leading-relaxed mb-2">The average time it takes for our new clients to see their first tangible results and qualified leads.</p>
+      </div>
+      <div class="border-t border-google-border pt-8">
+        <div class="text-6xl font-light tracking-tighter text-google-green mb-4">ZERO</div>
+        <p class="text-sm text-google-text-light leading-relaxed mb-2">Advance payment required to start your project. We work first, you pay later. That's the I digital preneur promise.</p>
+      </div>
+    </div>
+  </section>
+  <!-- END: Stats Section -->
+
+  <!-- BEGIN: Services Grid -->
+  <section class="py-20 px-6 bg-google-surface text-google-text border-b border-google-border">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">Every Digital Service Your Business Will Ever Need</h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+      
+      <div class="p-6 bg-white border border-google-border rounded-xl shadow-subtle hover:shadow-google transition-shadow flex flex-col items-center text-center cursor-pointer">
+        <div class="w-14 h-14 bg-yellow-50 rounded-full flex items-center justify-center mb-4">
+          <svg class="w-7 h-7 text-theme-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        </div>
+        <span class="text-sm font-semibold text-google-text">Website Development</span>
+      </div>
+      
+      <div class="p-6 bg-white border border-google-border rounded-xl shadow-subtle hover:shadow-google transition-shadow flex flex-col items-center text-center cursor-pointer">
+        <div class="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mb-4">
+          <svg class="w-7 h-7 text-google-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
+        </div>
+        <span class="text-sm font-semibold text-google-text">Digital Marketing</span>
+      </div>
+      
+      <div class="p-6 bg-white border border-google-border rounded-xl shadow-subtle hover:shadow-google transition-shadow flex flex-col items-center text-center cursor-pointer">
+        <div class="w-14 h-14 bg-yellow-50 rounded-full flex items-center justify-center mb-4">
+          <svg class="w-7 h-7 text-google-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+        </div>
+        <span class="text-sm font-semibold text-google-text">Lead Generation</span>
+      </div>
+      
+      <div class="p-6 bg-white border border-google-border rounded-xl shadow-subtle hover:shadow-google transition-shadow flex flex-col items-center text-center cursor-pointer">
+        <div class="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center mb-4">
+          <svg class="w-7 h-7 text-google-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <span class="text-sm font-semibold text-google-text">BPO & Support</span>
+      </div>
+
+    </div>
+    <div class="max-w-5xl mx-auto">
+       <a href="https://wa.me/918976409215?text=Hi%20Himanshu,%20can%20you%20tell%20me%20more%20about%20your%20services%20and%20pricing?" target="_blank" class="block text-center mt-12 w-full border border-google-border bg-white py-4 rounded-full font-medium text-theme-yellow hover:bg-google-surface transition-colors shadow-sm">See Pricing & Packages</a>
+    </div>
+  </section>
+  <!-- END: Services Grid -->
+
+  <!-- BEGIN: Comparison Table Section -->
+  <section class="py-20 px-6 bg-white text-google-text border-b border-google-border overflow-hidden">
+    <div class="max-w-6xl mx-auto text-center mb-16">
+      <span class="text-xs font-bold uppercase tracking-widest text-google-text-light block mb-4">I digital preneur vs. Traditional Alternatives</span>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">Hiring or traditional agencies? <span class="text-theme-yellow">There's a better way.</span></h2>
+    </div>
+    
+    <div class="max-w-6xl mx-auto overflow-x-auto pb-4">
+      <table class="w-full text-left border-collapse min-w-[700px]">
+        <thead>
+          <tr class="text-sm text-google-text-light border-b border-google-border">
+            <th class="py-4 px-4 font-semibold uppercase tracking-wider"></th>
+            <th class="py-4 px-4 font-semibold uppercase tracking-wider text-center">Speed (Results)</th>
+            <th class="py-4 px-4 font-semibold uppercase tracking-wider text-center">Trial</th>
+            <th class="py-4 px-4 font-semibold uppercase tracking-wider text-center">Advance Payment</th>
+            <th class="py-4 px-4 font-semibold uppercase tracking-wider text-center">Lead Quality</th>
+            <th class="py-4 px-4 font-semibold uppercase tracking-wider text-center">Cost-Effectiveness</th>
+          </tr>
+        </thead>
+        <tbody class="text-sm">
+          <tr class="bg-theme-yellow-light text-google-text font-bold rounded-lg shadow-sm border border-theme-yellow border-opacity-30">
+            <td class="py-5 px-4 rounded-l-lg">I digital preneur</td>
+            <td class="py-5 px-4 text-center text-theme-yellow-dark">48 Hours</td>
+            <td class="py-5 px-4 text-center">✓</td>
+            <td class="py-5 px-4 text-center">Zero</td>
+            <td class="py-5 px-4 text-center">Verified</td>
+            <td class="py-5 px-4 rounded-r-lg text-center">✓</td>
+          </tr>
+          <tr><td colspan="6" class="py-2"></td></tr>
+          <tr class="border-b border-google-border text-google-text">
+            <td class="py-4 px-4 font-medium">In-house team</td>
+            <td class="py-4 px-4 text-center text-google-text-light">Weeks</td>
+            <td class="py-4 px-4 text-center text-google-text-light">✕</td>
+            <td class="py-4 px-4 text-center">Salaries</td>
+            <td class="py-4 px-4 text-center">Variable</td>
+            <td class="py-4 px-4 text-center text-google-text-light">✕</td>
+          </tr>
+          <tr class="border-b border-google-border text-google-text">
+            <td class="py-4 px-4 font-medium">Traditional Agencies</td>
+            <td class="py-4 px-4 text-center text-google-text-light">Months</td>
+            <td class="py-4 px-4 text-center text-google-text-light">✕</td>
+            <td class="py-4 px-4 text-center">50-100%</td>
+            <td class="py-4 px-4 text-center">Variable</td>
+            <td class="py-4 px-4 text-center text-google-text-light">✕</td>
+          </tr>
+          <tr class="border-b border-google-border text-google-text">
+            <td class="py-4 px-4 font-medium">Freelancers</td>
+            <td class="py-4 px-4 text-center text-google-text-light">Weeks</td>
+            <td class="py-4 px-4 text-center text-google-text-light">✕</td>
+            <td class="py-4 px-4 text-center">Often 100%</td>
+            <td class="py-4 px-4 text-center text-google-text-light">Hit or Miss</td>
+            <td class="py-4 px-4 text-center font-bold text-google-green">✓</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <!-- END: Comparison Table Section -->
+
+  <!-- BEGIN: 35 Indian Client Reviews Section -->
+  <section class="py-20 px-6 bg-google-surface border-b border-google-border">
+    <div class="text-center mb-12">
+      <span class="text-theme-yellow text-xs font-bold uppercase tracking-widest block mb-4">Client Success</span>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-google-text">What our Indian clients <span class="text-theme-yellow">are saying</span></h2>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto" id="reviews-container">
+      
+      <div class="bg-white p-6 rounded-2xl border border-google-border shadow-subtle hover:shadow-google transition-shadow">
+        <div class="flex text-google-yellow mb-3 text-sm">★★★★★</div>
+        <p class="italic mb-4 text-sm text-google-text-light leading-relaxed">"The Result-Oriented Solutions blew my mind. I didn't pay anything upfront and got real, qualified leads for my real estate business. Highly recommended!"</p>
+        <div class="font-bold text-sm text-google-text">Rahul Sharma</div>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border border-google-border shadow-subtle hover:shadow-google transition-shadow">
+        <div class="flex text-google-yellow mb-3 text-sm">★★★★★</div>
+        <p class="italic mb-4 text-sm text-google-text-light leading-relaxed">"Our e-commerce sales doubled after I digital preneur revamped our website and took over our Meta Ads. The results in the first 48 hours were shocking!"</p>
+        <div class="font-bold text-sm text-google-text">Priya Singh</div>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border border-google-border shadow-subtle hover:shadow-google transition-shadow">
+        <div class="flex text-google-yellow mb-3 text-sm">★★★★★</div>
+        <p class="italic mb-4 text-sm text-google-text-light leading-relaxed">"No advance payment is a game-changer. It shows they are confident in their work. We are now a long-term client."</p>
+        <div class="font-bold text-sm text-google-text">Amit Patel</div>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border border-google-border shadow-subtle hover:shadow-google transition-shadow">
+        <div class="flex text-google-yellow mb-3 text-sm">★★★★★</div>
+        <p class="italic mb-4 text-sm text-google-text-light leading-relaxed">"I digital preneur is a lifesaver for our sales team. The lead quality is consistently high, which has boosted our conversion rates significantly."</p>
+        <div class="font-bold text-sm text-google-text">Sneha Reddy</div>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border border-google-border shadow-subtle hover:shadow-google transition-shadow">
+        <div class="flex text-google-yellow mb-3 text-sm">★★★★★</div>
+        <p class="italic mb-4 text-sm text-google-text-light leading-relaxed">"Great communication and top-notch quality delivered right on schedule. The free website audit was incredibly detailed and helpful."</p>
+        <div class="font-bold text-sm text-google-text">Vikram Malhotra</div>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border border-google-border shadow-subtle hover:shadow-google transition-shadow">
+        <div class="flex text-google-yellow mb-3 text-sm">★★★★★</div>
+        <p class="italic mb-4 text-sm text-google-text-light leading-relaxed">"They understood our business goals perfectly from day one. Seamless process and fantastic ROI."</p>
+        <div class="font-bold text-sm text-google-text">Ananya Gupta</div>
+      </div>
+
+      <!-- Hidden Reviews -->
+      <div class="hidden review-card-hidden bg-white p-6 rounded-2xl border border-google-border shadow-subtle"><div class="flex text-google-yellow mb-3 text-sm">★★★★★</div><p class="italic mb-4 text-sm text-google-text-light">"Exceptional service! The new website is super clean, modern, and loads incredibly fast."</p><div class="font-bold text-sm text-google-text">Rajesh Kumar</div></div>
+      <div class="hidden review-card-hidden bg-white p-6 rounded-2xl border border-google-border shadow-subtle"><div class="flex text-google-yellow mb-3 text-sm">★★★★★</div><p class="italic mb-4 text-sm text-google-text-light">"We saw a 40% increase in conversions after their website redesign and lead generation campaign."</p><div class="font-bold text-sm text-google-text">Neha Desai</div></div>
+      <div class="hidden review-card-hidden bg-white p-6 rounded-2xl border border-google-border shadow-subtle"><div class="flex text-google-yellow mb-3 text-sm">★★★★★</div><p class="italic mb-4 text-sm text-google-text-light">"Best digital marketing agency I have worked with by far. They actually deliver on their promises."</p><div class="font-bold text-sm text-google-text">Kunal Kapoor</div></div>
+      <div class="hidden review-card-hidden bg-white p-6 rounded-2xl border border-google-border shadow-subtle"><div class="flex text-google-yellow mb-3 text-sm">★★★★★</div><p class="italic mb-4 text-sm text-google-text-light">"Timely delivery and very responsive to our feedback. Himanshu and his team are true professionals."</p><div class="font-bold text-sm text-google-text">Pooja Joshi</div></div>
+      <div class="hidden review-card-hidden bg-white p-6 rounded-2xl border border-google-border shadow-subtle"><div class="flex text-google-yellow mb-3 text-sm">★★★★★</div><p class="italic mb-4 text-sm text-google-text-light">"Innovative, and highly skilled technical team. Our website performance has never been better."</p><div class="font-bold text-sm text-google-text">Suresh Menon</div></div>
+      <div class="hidden review-card-hidden bg-white p-6 rounded-2xl border border-google-border shadow-subtle"><div class="flex text-google-yellow mb-3 text-sm">★★★★★</div><p class="italic mb-4 text-sm text-google-text-light">"The Google Ads campaigns performed beautifully, bringing in leads at a much lower cost-per-acquisition."</p><div class="font-bold text-sm text-google-text">Kavita Iyer</div></div>
+      <div class="hidden review-card-hidden bg-white p-6 rounded-2xl border border-google-border shadow-subtle"><div class="flex text-google-yellow mb-3 text-sm">★★★★★</div><p class="italic mb-4 text-sm text-google-text-light">"A wonderful experience from start to finish. They handled everything for us."</p><div class="font-bold text-sm text-google-text">Rohan Das</div></div>
+      <div class="hidden review-card-hidden bg-white p-6 rounded-2xl border border-google-border shadow-subtle"><div class="flex text-google-yellow mb-3 text-sm">★★★★★</div><p class="italic mb-4 text-sm text-google-text-light">"Our BPO process is now much more efficient thanks to their support team."</p><div class="font-bold text-sm text-google-text">Meera Nair</div></div>
+      <div class="hidden review-card-hidden bg-white p-6 rounded-2xl border border-google-border shadow-subtle"><div class="flex text-google-yellow mb-3 text-sm">★★★★★</div><p class="italic mb-4 text-sm text-google-text-light">"Highly recommended for any serious business looking to scale their digital presence and sales."</p><div class="font-bold text-sm text-google-text">Arjun Khanna</div></div>
+
+    </div>
+
+    <div class="text-center mt-12">
+      <button id="view-more-reviews" class="bg-white border border-google-border text-theme-yellow font-medium py-3 px-8 rounded-full shadow-sm hover:bg-google-surface hover:shadow-google transition-all">
+        View More
+      </button>
+    </div>
+  </section>
+  <!-- END: 35 Indian Client Reviews Section -->
+
+  <!-- BEGIN: Vertical Masterpieces Section -->
+  <section class="py-20 px-6 bg-white border-b border-google-border">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-semibold text-google-text tracking-tight">High-Converting <span class="text-theme-yellow">Mobile Experiences</span></h2>
+      <p class="text-google-text-light mt-4 text-sm uppercase tracking-widest font-medium">Designed for mobile-first results</p>
+    </div>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-7xl mx-auto">
+      <div class="relative w-full aspect-[9/16] rounded-2xl overflow-hidden bg-google-surface shadow-google border border-google-border group">
+        <img src="https://i.ibb.co/SwBf4L0n/IMG-20260320-WA0135.jpg" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" alt="I digital preneur Mobile Ad 1">
+      </div>
+      <div class="relative w-full aspect-[9/16] rounded-2xl overflow-hidden bg-google-surface shadow-google border border-google-border group">
+        <img src="https://i.ibb.co/DP7TQKzG/IMG-20260320-WA0131.jpg" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" alt="I digital preneur Mobile Ad 2">
+      </div>
+      <div class="relative w-full aspect-[9/16] rounded-2xl overflow-hidden bg-google-surface shadow-google border border-google-border group">
+        <img src="https://i.ibb.co/SwBf4L0n/IMG-20260320-WA0135.jpg" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" alt="I digital preneur Mobile Ad 3">
+      </div>
+      <div class="relative w-full aspect-[9/16] rounded-2xl overflow-hidden bg-google-surface shadow-google border border-google-border group">
+        <img src="https://i.ibb.co/DP7TQKzG/IMG-20260320-WA0131.jpg" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" alt="I digital preneur Mobile Ad 4">
+      </div>
+    </div>
+  </section>
+  <!-- END: Vertical Masterpieces Section -->
+
+  <!-- BEGIN: Final CTA -->
+  <section class="py-24 px-6 text-center bg-theme-yellow-light border-b border-theme-yellow border-opacity-20">
+    <h2 class="text-4xl font-semibold mb-4 text-theme-yellow-dark tracking-tight">
+      Ready to Grow Your Business?
+    </h2>
+    <p class="text-lg text-google-text mb-8 max-w-2xl mx-auto">Stop paying for promises. Start paying for results. Connect with us for Result-Oriented Solutions and let's build your success story together.</p>
+    <a href="https://wa.me/918976409215?text=Hi%20Himanshu,%20I'm%20ready%20to%20get%20Result-Oriented%20Solutions!" target="_blank" class="inline-block bg-theme-yellow text-google-text font-bold py-4 px-10 rounded-full text-lg w-full max-w-md mx-auto hover:bg-theme-yellow-dark hover:shadow-google transition-all">
+      Start Getting Results Now
+    </a>
+  </section>
+  <!-- END: Final CTA -->
+
+  <!-- BEGIN: Footer -->
+  <footer class="bg-google-surface text-google-text-light pt-20 pb-10 px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="mb-12">
+            <!-- Footer Simple Logo -->
+            <div class="text-[28px] font-bold tracking-tight flex items-center leading-none text-google-text-light grayscale select-none">
+              <span>I digital preneur</span>
+            </div>
+            <div class="text-[0.55rem] font-bold tracking-[0.2em] text-google-text-light mt-[4px] uppercase">Marketing & Growth Agency</div>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+          <div class="space-y-4">
+            <h4 class="font-bold uppercase text-xs text-google-text tracking-widest">Services</h4>
+            <ul class="space-y-2 text-sm text-google-text-light">
+              <li><a href="#" class="hover:text-theme-yellow transition-colors">Website Development</a></li>
+              <li><a href="#" class="hover:text-theme-yellow transition-colors">Digital Marketing</a></li>
+              <li><a href="#" class="hover:text-theme-yellow transition-colors">Lead Generation</a></li>
+              <li><a href="#" class="hover:text-theme-yellow transition-colors">BPO Services</a></li>
+            </ul>
+          </div>
+          <div class="space-y-4">
+            <h4 class="font-bold uppercase text-xs text-google-text tracking-widest">Company</h4>
+            <ul class="space-y-2 text-sm text-google-text-light">
+              <li><a href="#" class="hover:text-theme-yellow transition-colors">About Us</a></li>
+              <li><a href="#" class="hover:text-theme-yellow transition-colors">Why Choose Us</a></li>
+              <li><a href="#" class="hover:text-theme-yellow transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+          <div class="space-y-4">
+            <h4 class="font-bold uppercase text-xs text-google-text tracking-widest">Contact</h4>
+            <ul class="space-y-2 text-sm text-google-text-light">
+              <li><a href="https://wa.me/918976409215" class="hover:text-theme-yellow transition-colors">WhatsApp</a></li>
+              <li><a href="#" class="hover:text-theme-yellow transition-colors">Get Free Audit</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-google-border pt-8 flex flex-col sm:flex-row justify-between items-center gap-6">
+          <p class="text-xs text-google-text-light">© 2024 I digital preneur. All rights reserved.</p>
+          <div class="flex gap-6">
+            <a class="w-8 h-8 bg-white border border-google-border shadow-subtle rounded-full hover:bg-google-surface-alt transition-colors flex items-center justify-center text-google-text-light hover:text-theme-yellow" href="#">
+                <span class="sr-only">Facebook</span>
+            </a>
+            <a class="w-8 h-8 bg-white border border-google-border shadow-subtle rounded-full hover:bg-google-surface-alt transition-colors flex items-center justify-center text-google-text-light hover:text-theme-yellow" href="#">
+                <span class="sr-only">Twitter</span>
+            </a>
+            <a class="w-8 h-8 bg-white border border-google-border shadow-subtle rounded-full hover:bg-google-surface-alt transition-colors flex items-center justify-center text-google-text-light hover:text-theme-yellow" href="#">
+                <span class="sr-only">LinkedIn</span>
+            </a>
+          </div>
+        </div>
+    </div>
+  </footer>
+  <!-- END: Footer -->
+
+  <!-- BEGIN: Floating WhatsApp & Modal -->
+  <div class="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
+    <!-- Trigger Button -->
+    <button onclick="openWaModal()" class="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.2)] hover:scale-105 transition-transform duration-300 relative group animate-bounce hover:animate-none">
+      <svg class="w-9 h-9 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12.01 2.012c-5.495 0-9.974 4.47-9.974 9.96 0 1.764.456 3.486 1.327 5.006L2 22l5.163-1.344c1.464.814 3.123 1.246 4.847 1.246 5.493 0 9.972-4.47 9.972-9.96 0-5.49-4.479-9.93-9.972-9.93zm5.443 12.111c-.3.15-1.768.87-2.04.97-.272.1-.472.15-.67.15-.198.3-.77 1.05-.945 1.25-.174.2-.348.225-.648.075-.3-.15-1.26-.465-2.4-1.485-.885-.795-1.482-1.77-1.656-2.07-.174-.3-.018-.465.132-.615.135-.135.3-.345.45-.51.15-.165.2-.285.3-.465.1-.18.05-.345-.025-.495-.075-.15-.67-1.62-.918-2.22-.24-.585-.486-.51-.67-.51-.174 0-.374-.015-.574-.015-.2 0-.525.075-.8.375-.275.3-1.048 1.02-1.048 2.49s1.074 2.895 1.224 3.09c.15.195 2.1 3.21 5.093 4.5.711.3 1.266.48 1.698.615.714.225 1.365.195 1.878.12.576-.09 1.768-.72 2.018-1.425.25-.705.25-1.305.174-1.425-.075-.12-.275-.195-.575-.345z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Modal Form -->
+  <div id="wa-modal" class="hidden fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm flex items-center justify-center px-4 font-sans transition-opacity">
+    <div class="bg-white rounded-2xl shadow-google max-w-md w-full p-6 sm:p-8 relative border border-google-border scale-100">
+      <button onclick="closeWaModal()" class="absolute top-4 right-4 text-google-text-light hover:text-google-text bg-google-surface rounded-full p-1 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+      
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 bg-[#25D366]/10 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24"><path d="M12.01 2.012c-5.495 0-9.974 4.47-9.974 9.96 0 1.764.456 3.486 1.327 5.006L2 22l5.163-1.344c1.464.814 3.123 1.246 4.847 1.246 5.493 0 9.972-4.47 9.972-9.96 0-5.49-4.479-9.93-9.972-9.93zm5.443 12.111c-.3.15-1.768.87-2.04.97-.272.1-.472.15-.67.15-.198.3-.77 1.05-.945 1.25-.174.2-.348.225-.648.075-.3-.15-1.26-.465-2.4-1.485-.885-.795-1.482-1.77-1.656-2.07-.174-.3-.018-.465.132-.615.135-.135.3-.345.45-.51.15-.165.2-.285.3-.465.1-.18.05-.345-.025-.495-.075-.15-.67-1.62-.918-2.22-.24-.585-.486-.51-.67-.51-.174 0-.374-.015-.574-.015-.2 0-.525.075-.8.375-.275.3-1.048 1.02-1.048 2.49s1.074 2.895 1.224 3.09c.15.195 2.1 3.21 5.093 4.5.711.3 1.266.48 1.698.615.714.225 1.365.195 1.878.12.576-.09 1.768-.72 2.018-1.425.25-.705.25-1.305.174-1.425-.075-.12-.275-.195-.575-.345z"/></svg>
+        </div>
+        <h3 class="text-2xl font-bold text-google-text">Let's Connect</h3>
+      </div>
+      <p class="text-sm text-google-text-light mb-6">Drop your details below and we will assist you directly on WhatsApp.</p>
+      
+      <form onsubmit="submitWaForm(event)" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-google-text mb-1">Your Full Name</label>
+          <input type="text" id="wa-name" required class="w-full px-4 py-3 border border-google-border rounded-xl focus:ring-2 focus:ring-[#25D366] focus:border-[#25D366] focus:outline-none transition-colors bg-google-surface" placeholder="e.g. Rahul Sharma">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-google-text mb-1">Business Name (Optional)</label>
+          <input type="text" id="wa-business" class="w-full px-4 py-3 border border-google-border rounded-xl focus:ring-2 focus:ring-[#25D366] focus:border-[#25D366] focus:outline-none transition-colors bg-google-surface" placeholder="e.g. My Company Pvt Ltd">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-google-text mb-1">How can we help?</label>
+          <textarea id="wa-details" required class="w-full px-4 py-3 border border-google-border rounded-xl focus:ring-2 focus:ring-[#25D366] focus:border-[#25D366] focus:outline-none h-24 resize-none transition-colors bg-google-surface" placeholder="Tell us about your project or the service you need..."></textarea>
+        </div>
+        <button type="submit" class="w-full bg-[#25D366] text-white font-semibold py-3.5 rounded-full hover:bg-[#20b858] transition-colors shadow-subtle flex items-center justify-center gap-2 mt-2 text-lg">
+          Start Chat
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- END: Floating WhatsApp & Modal -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cloudinary-video-player/1.10.5/cld-video-player.min.js"></script>
+  
+  <!-- UI Interactions Script -->
+  <script>
+    // New WhatsApp Modal Logic
+    function openWaModal() {
+      document.getElementById('wa-modal').classList.remove('hidden');
+    }
+    
+    function closeWaModal() {
+      document.getElementById('wa-modal').classList.add('hidden');
+    }
+    
+    function submitWaForm(e) {
+      e.preventDefault();
+      const name = document.getElementById('wa-name').value;
+      const business = document.getElementById('wa-business').value;
+      const details = document.getElementById('wa-details').value;
+      
+      let text = `Hi Himanshu, my name is ${name}. `;
+      if (business) {
+         text += `I am from ${business}. `;
+      }
+      text += `\n\nI need help with:\n${details}`;
+      
+      const encodedText = encodeURIComponent(text);
+      window.open(`https://wa.me/918976409215?text=${encodedText}`, '_blank');
+      closeWaModal();
+    }
+
+    // Scroll Logic
+    function scrollSlider(sliderId, direction) {
+        const slider = document.getElementById(sliderId);
+        if(!slider) return;
+        const scrollAmount = window.innerWidth * 0.8; 
+        slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
+
+    let currentZoom = 1;
+    function openFullscreenImage(element) {
+        const modal = document.getElementById('fullscreen-modal');
+        const imgElement = document.getElementById('fullscreen-img-element');
+        const sourceImg = element.querySelector('img').src;
+        
+        imgElement.src = sourceImg;
+        currentZoom = 1;
+        imgElement.style.transform = `scale(${currentZoom})`;
+        
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeFullscreenImage() {
+        document.getElementById('fullscreen-modal').classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    function zoomImage(amount) {
+        currentZoom += amount;
+        if(currentZoom < 0.5) currentZoom = 0.5;
+        if(currentZoom > 3) currentZoom = 3;
+        document.getElementById('fullscreen-img-element').style.transform = `scale(${currentZoom})`;
+    }
+
+    function resetZoom() {
+        currentZoom = 1;
+        document.getElementById('fullscreen-img-element').style.transform = `scale(${currentZoom})`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const heroPlayer = cloudinary.videoPlayer('hero-player', {
+          cloudName: 'dzq7qb6ew',
+          publicId: 'km_20260328_1440p_60f_20260328_170651_xlk1fs',
+          fluid: true,
+          controls: true,
+          autoplayMode: 'always',
+          loop: true,
+          muted: true
+        });
+      } catch (e) {
+        console.error("Cloudinary hero player could not be initialized.", e);
+      }
+
+      try {
+        const player = cloudinary.videoPlayer('player', {
+          cloudName: 'dzq7qb6ew',
+          publicId: 'gemini_generated_video_aa21f76a_rikpbz',
+          fluid: true,
+          controls: true,
+          autoplayMode: 'always',
+          loop: true,
+          muted: true
+        });
+      } catch (e) {
+        console.error("Cloudinary player could not be initialized.", e);
+      }
+      
+      const openBtn = document.getElementById('open-menu-btn');
+      const closeBtn = document.getElementById('close-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (openBtn && closeBtn && mobileMenu) {
+        openBtn.addEventListener('click', () => {
+          mobileMenu.classList.remove('hidden');
+          document.body.style.overflow = 'hidden'; 
+        });
+
+        closeBtn.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          document.body.style.overflow = ''; 
+        });
+      }
+
+      const viewMoreBtn = document.getElementById('view-more-reviews');
+      const hiddenReviews = document.querySelectorAll('.review-card-hidden');
+
+      if (viewMoreBtn && hiddenReviews.length > 0) {
+        viewMoreBtn.addEventListener('click', () => {
+          hiddenReviews.forEach(card => {
+            card.classList.remove('hidden');
+          });
+          viewMoreBtn.style.display = 'none';
+        });
+      }
+    });
+
+    function toggleMenu(contentId, iconId) {
+      const content = document.getElementById(contentId);
+      const icon = document.getElementById(iconId);
+      
+      if (content && icon) {
+        if (content.classList.contains('hidden')) {
+          content.classList.remove('hidden');
+          content.classList.add('flex');
+          icon.classList.add('rotate-180');
+        } else {
+          content.classList.add('hidden');
+          content.classList.remove('flex');
+          icon.classList.remove('rotate-180');
+        }
+      }
+    }
+  </script>
+
+  <!-- FIREBASE DATA FETCH (USER PANEL) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB4jDUkGOAtZDzWfQ-KKTPGlLu05NdMQMU",
+      authDomain: "flipmed-9abe8.firebaseapp.com",
+      databaseURL: "https://flipmed-9abe8-default-rtdb.firebaseio.com",
+      projectId: "flipmed-9abe8",
+      storageBucket: "flipmed-9abe8.firebasestorage.app",
+      messagingSenderId: "115049987394",
+      appId: "1:115049987394:web:c8140220615408486f9cdb",
+      measurementId: "G-SKFVC60VHX"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase(app);
+
+    // FETCH BLOG LINK
+    const blogRef = ref(db, 'settings/blog');
+    onValue(blogRef, (snapshot) => {
+        const data = snapshot.val();
+        if(data && data.link) {
+            const btn = document.getElementById('dynamic-blog-btn');
+            const mobileBtn = document.getElementById('dynamic-mobile-blog-btn');
+            
+            if(btn) {
+                btn.href = data.link;
+                btn.classList.remove('hidden');
+            }
+            if(mobileBtn) {
+                mobileBtn.querySelector('a').href = data.link;
+                mobileBtn.classList.remove('hidden');
+            }
+        }
+    });
+
+    // FETCH "OUR PROJECTS" (Image + Link)
+    const projectsRef = ref(db, 'projects');
+    onValue(projectsRef, (snapshot) => {
+        const data = snapshot.val();
+        const slider = document.getElementById('projects-slider');
+        if(slider && data) {
+            slider.innerHTML = ''; // Clear container
+            Object.values(data).forEach(item => {
+                const div = document.createElement('div');
+                div.className = "w-[85vw] md:w-[60vw] lg:w-[800px] flex-shrink-0 aspect-video snap-center rounded-2xl overflow-hidden shadow-google border border-google-border relative group cursor-pointer";
+                div.onclick = function() { window.openFullscreenImage(this); };
+                
+                div.innerHTML = `
+                    <img src="${item.image}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors flex items-center justify-center pointer-events-none">
+                        <span class="bg-black/60 text-white text-xs px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">Click to Expand</span>
+                    </div>
+                `;
+                
+                // Add link overlay if exists
+                if(item.link) {
+                    const linkBtn = document.createElement('a');
+                    linkBtn.href = item.link;
+                    linkBtn.target = "_blank";
+                    linkBtn.className = "absolute bottom-6 right-6 bg-theme-yellow text-google-text font-bold px-6 py-3 rounded-full shadow-google hover:bg-theme-yellow-dark transition-colors z-10 text-sm md:text-base";
+                    linkBtn.innerText = "Visit Link";
+                    linkBtn.onclick = function(e) { e.stopPropagation(); }; // Prevent fullscreen trigger on button click
+                    div.appendChild(linkBtn);
+                }
+                
+                slider.appendChild(div);
+            });
+        }
+    });
+
+    // FETCH "WHY CHOOSE US" (Image Only)
+    const whyRef = ref(db, 'why_choose_us');
+    onValue(whyRef, (snapshot) => {
+        const data = snapshot.val();
+        const slider = document.getElementById('why-choose-slider');
+        if(slider && data) {
+            slider.innerHTML = ''; // Clear container
+            Object.values(data).forEach(item => {
+                const div = document.createElement('div');
+                div.className = "w-[85vw] md:w-[60vw] lg:w-[800px] flex-shrink-0 aspect-video snap-center rounded-2xl overflow-hidden shadow-google border border-google-border cursor-pointer relative group";
+                div.onclick = function() { window.openFullscreenImage(this); };
+                
+                div.innerHTML = `
+                    <img src="${item.image}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors flex items-center justify-center pointer-events-none">
+                        <span class="bg-black/60 text-white text-xs px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">Click to Expand</span>
+                    </div>
+                `;
+                
+                slider.appendChild(div);
+            });
+        }
+    });
+
+    // FETCH SERVICES / PRICING PACKAGES
+    const servicesRef = ref(db, 'services');
+    onValue(servicesRef, (snapshot) => {
+        const data = snapshot.val();
+        const mainContainer = document.getElementById('dynamic-services-container');
+        if(mainContainer && data) {
+            mainContainer.innerHTML = ''; // Clear
+            
+            // Group by category
+            const categories = {};
+            Object.values(data).forEach(item => {
+                if(!categories[item.category]) categories[item.category] = [];
+                categories[item.category].push(item);
+            });
+
+            // Create Sections
+            Object.keys(categories).forEach(cat => {
+                const section = document.createElement('section');
+                section.className = "py-20 bg-theme-yellow-light border-b border-google-border overflow-hidden";
+                
+                const titleDiv = document.createElement('div');
+                titleDiv.className = "max-w-6xl mx-auto mb-12 text-center px-6";
+                titleDiv.innerHTML = `
+                   <span class="text-theme-yellow-dark text-xs font-bold uppercase tracking-widest block mb-4">Pricing Ladder</span>
+                   <h2 class="text-3xl md:text-4xl font-semibold text-google-text tracking-tight">
+                      ${cat} <span class="text-theme-yellow-dark">Packages</span>
+                   </h2>
+                `;
+                section.appendChild(titleDiv);
+
+                const scrollDiv = document.createElement('div');
+                scrollDiv.className = "flex overflow-x-auto gap-6 pb-12 snap-x snap-mandatory hide-scrollbar px-6 md:px-12 max-w-[1600px] mx-auto items-center";
+                
+                categories[cat].forEach(plan => {
+                    const card = document.createElement('div');
+                    card.className = "w-[85vw] md:w-[280px] lg:w-[calc(25%-1.125rem)] flex-shrink-0 aspect-[9/16] snap-center border border-google-border rounded-2xl shadow-subtle hover:shadow-google-hover hover:-translate-y-1 transition-all flex flex-col overflow-hidden relative";
+                    card.style.backgroundImage = `url('${plan.image}')`;
+                    card.style.backgroundSize = 'cover';
+                    card.style.backgroundPosition = 'center';
+
+                    let featuresHtml = '';
+                    if(plan.features && Array.isArray(plan.features)){
+                        plan.features.forEach(f => {
+                            featuresHtml += `<li class="flex items-start gap-2"><span class="text-theme-yellow-dark mt-[2px]">✓</span> ${f}</li>`;
+                        });
+                    }
+
+                    const waMsg = encodeURIComponent(`Hi Himanshu, I'm interested in the ${plan.name} plan from ${cat} priced at ${plan.price}. Please share more details.`);
+
+                    card.innerHTML = `
+                        <div class="absolute inset-0 bg-white/90 z-0"></div>
+                        <div class="relative z-10 p-6 bg-theme-yellow/20 border-b border-google-border/50 text-center shrink-0">
+                            <div class="text-xs font-bold uppercase tracking-widest text-theme-yellow-dark mb-2">${cat}</div>
+                            <h3 class="text-xl font-bold text-google-text mb-1">${plan.name}</h3>
+                            <div class="text-2xl font-bold text-google-text">${plan.price}</div>
+                        </div>
+                        <div class="relative z-10 p-6 flex-grow overflow-y-auto card-scroll min-h-0">
+                            <ul class="space-y-4 text-sm text-google-text-light font-medium">${featuresHtml}</ul>
+                        </div>
+                        <div class="relative z-10 p-6 shrink-0 mt-auto bg-white/50 backdrop-blur-sm border-t border-google-border/50">
+                            <a href="https://wa.me/918976409215?text=${waMsg}" target="_blank" class="flex items-center justify-center gap-2 w-full text-center bg-white/80 border border-google-border text-google-text font-semibold py-3 rounded-full hover:bg-theme-yellow hover:text-google-text hover:border-theme-yellow transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.453 14.123c-.3-.15-1.768-.87-2.04-.97-.272-.1-.472-.15-.67.15-.198.3-.77 1.05-.945 1.25-.174.2-.348.225-.648.075-.3-.15-1.26-.465-2.4-1.485-.885-.795-1.482-1.77-1.656-2.07-.174-.3-.018-.465.132-.615.135-.135.3-.345.45-.51.15-.165.2-.285.3-.465.1-.18.05-.345-.025-.495-.075-.15-.67-1.62-.918-2.22-.24-.585-.486-.51-.67-.51-.174 0-.374-.015-.574-.015-.2 0-.525.075-.8.375-.275.3-1.048 1.02-1.048 2.49s1.074 2.895 1.224 3.09c.15.195 2.1 3.21 5.093 4.5.711.3 1.266.48 1.698.615.714.225 1.365.195 1.878.12.576-.09 1.768-.72 2.018-1.425.25-.705.25-1.305.174-1.425-.075-.12-.275-.195-.575-.345z"/></svg> Choose Plan
+                            </a>
+                        </div>
+                    `;
+                    scrollDiv.appendChild(card);
+                });
+
+                section.appendChild(scrollDiv);
+                mainContainer.appendChild(section);
+            });
+        }
+    });
+  </script>
+</body>
+</html>
