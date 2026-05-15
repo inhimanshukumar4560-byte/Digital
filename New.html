@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - KLE Patient Survey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Adding FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        // Aapka same Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCYujgtEDDfvnJePhDKiKm9DkftoGAq9t8",
+            authDomain: "benchtopinnovations12.firebaseapp.com",
+            databaseURL: "https://benchtopinnovations12-default-rtdb.firebaseio.com",
+            projectId: "benchtopinnovations12",
+            storageBucket: "benchtopinnovations12.firebasestorage.app",
+            messagingSenderId: "113274194106",
+            appId: "1:113274194106:web:c2548c12c1ea20c5b69a83"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        
+        let allPatientsData = []; // Store data for search and export
+
+        // Fetch Data from Firebase
+        const patientsRef = ref(db, 'patients/');
+        onValue(patientsRef, (snapshot) => {
+            const tableBody = document.getElementById('tableBody');
+            const totalCount = document.getElementById('totalCount');
+            const loader = document.getElementById('loader');
+            
+            tableBody.innerHTML = ""; // Clear existing data
+            allPatientsData = [];
+
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                const keys = Object.keys(data);
+                totalCount.innerText = keys.length;
+
+                // Loop through data and reverse it to show newest first
+                keys.reverse().forEach((key) => {
+                    const patient = data[key];
+                    allPatientsData.push(patient);
+                    appendRowToTable(patient, tableBody);
+                });
+                loader.style.display = "none";
+            } else {
+                totalCount.innerText = "0";
+                loader.innerHTML = "<td colspan='19' class='text-center py-4 text-gray-500'>No data found.</td>";
+            }
+        });
+
+        // Function to create table rows
+        function appendRowToTable(patient, tableBody) {
+            const row = document.createElement('tr');
+            row.className = "border-b border-gray-200 hover:bg-blue-50 transition";
+            
+            row.innerHTML = `
+                <td class="py-3 px-6 text-left whitespace-nowrap text-sm text-gray-700">${patient.timestamp || '-'}</td>
+                <td class="py-3 px-6 text-left whitespace-nowrap font-medium text-gray-900">${patient.name || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.age || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.gender || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.contact || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.aadhaar || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.religion || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.maritalStatus || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700 truncate max-w-xs" title="${patient.address || '-'}">${patient.address || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.familyMembers || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.socioeconomicStatus || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm font-semibold text-blue-600">${patient.preferredHealthCare || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.familyDetails || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-red-600">${patient.presentIllness || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.chronicIllness || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.medicalTreatment || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.habbits || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.otherComplaints || '-'}</td>
+                <td class="py-3 px-6 text-left text-sm text-gray-700">${patient.treatmentFromKle || '-'}</td>
+            `;
+            tableBody.appendChild(row);
+        }
+
+        // Search Functionality
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = "";
+
+            const filteredData = allPatientsData.filter(patient => {
+                return (patient.name && patient.name.toLowerCase().includes(searchTerm)) || 
+                       (patient.contact && patient.contact.includes(searchTerm));
+            });
+
+            if(filteredData.length > 0) {
+                filteredData.forEach(patient => appendRowToTable(patient, tableBody));
+            } else {
+                tableBody.innerHTML = "<tr id='loader'><td colspan='19' class='text-center py-4 text-gray-500'>No matching records found.</td></tr>";
+            }
+        });
+
+        // Export to CSV Functionality
+        window.exportTableToCSV = function() {
+            if(allPatientsData.length === 0) {
+                alert("No data to export!");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            // CSV Headers
+            csvContent += "Timestamp,Name,Age,Gender,Contact,Aadhaar,Religion,Marital Status,Address,Family Members,Socioeconomic Status,Preferred Health Care,Family Details,Present Illness,Chronic Illness,Medical Treatment,Habbits,Other Complaints,KLE Treatment\n";
+
+            allPatientsData.forEach(function(row) {
+                // Formatting values to handle commas inside text fields (like addresses)
+                let rowArray = [
+                    `"${row.timestamp || ''}"`, `"${row.name || ''}"`, `"${row.age || ''}"`, `"${row.gender || ''}"`,
+                    `"${row.contact || ''}"`, `"${row.aadhaar || ''}"`, `"${row.religion || ''}"`, `"${row.maritalStatus || ''}"`,
+                    `"${row.address || ''}"`, `"${row.familyMembers || ''}"`, `"${row.socioeconomicStatus || ''}"`,
+                    `"${row.preferredHealthCare || ''}"`, `"${row.familyDetails || ''}"`, `"${row.presentIllness || ''}"`,
+                    `"${row.chronicIllness || ''}"`, `"${row.medicalTreatment || ''}"`, `"${row.habbits || ''}"`,
+                    `"${row.otherComplaints || ''}"`, `"${row.treatmentFromKle || ''}"`
+                ];
+                csvContent += rowArray.join(",") + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "KLE_Patient_Survey_Data.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Top Navbar -->
+    <nav class="bg-blue-900 text-white shadow-lg p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-hospital-user text-2xl"></i>
+                <h1 class="text-xl font-bold tracking-wider">KLE Admin Dashboard</h1>
+            </div>
+            <div class="text-sm font-medium bg-blue-800 px-4 py-2 rounded-full">
+                Live Data <i class="fa-solid fa-circle text-green-400 text-[10px] ml-1 animate-pulse"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-[95%] mx-auto mt-8 space-y-6">
+        
+        <!-- Controls & Stats Section -->
+        <div class="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-xl shadow-sm border-t-4 border-blue-600">
+            
+            <!-- Stats -->
+            <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                <div class="bg-blue-100 p-4 rounded-full text-blue-600">
+                    <i class="fa-solid fa-users text-2xl"></i>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-sm font-semibold uppercase">Total Submissions</p>
+                    <p class="text-3xl font-bold text-gray-800" id="totalCount">0</p>
+                </div>
+            </div>
+
+            <!-- Search & Export -->
+            <div class="flex items-center space-x-4 w-full md:w-auto">
+                <div class="relative w-full md:w-72">
+                    <i class="fa-solid fa-search absolute left-3 top-3 text-gray-400"></i>
+                    <input type="text" id="searchInput" placeholder="Search by Name or Contact..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                </div>
+                <button onclick="exportTableToCSV()" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-semibold flex items-center space-x-2 transition shadow-md whitespace-nowrap">
+                    <i class="fa-solid fa-file-excel"></i>
+                    <span>Export CSV</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+            <div class="overflow-x-auto h-[65vh] relative">
+                <table class="min-w-max w-full table-auto">
+                    <!-- Table Head -->
+                    <thead class="bg-gray-50 text-gray-600 uppercase text-xs leading-normal sticky top-0 z-10 shadow-sm">
+                        <tr>
+                            <th class="py-3 px-6 text-left">Date & Time</th>
+                            <th class="py-3 px-6 text-left">Name</th>
+                            <th class="py-3 px-6 text-left">Age</th>
+                            <th class="py-3 px-6 text-left">Gender</th>
+                            <th class="py-3 px-6 text-left">Contact</th>
+                            <th class="py-3 px-6 text-left">Aadhaar</th>
+                            <th class="py-3 px-6 text-left">Religion</th>
+                            <th class="py-3 px-6 text-left">Marital Status</th>
+                            <th class="py-3 px-6 text-left">Address</th>
+                            <th class="py-3 px-6 text-left">Family Members</th>
+                            <th class="py-3 px-6 text-left">Socioeconomic/Income</th>
+                            <th class="py-3 px-6 text-left">Preferred Health Care</th>
+                            <th class="py-3 px-6 text-left">Family Details</th>
+                            <th class="py-3 px-6 text-left">Present Illness</th>
+                            <th class="py-3 px-6 text-left">Chronic Illness</th>
+                            <th class="py-3 px-6 text-left">Medical Treatment</th>
+                            <th class="py-3 px-6 text-left">Habbits</th>
+                            <th class="py-3 px-6 text-left">Other Complaints</th>
+                            <th class="py-3 px-6 text-left">KLE Treatment H/O</th>
+                        </tr>
+                    </thead>
+                    <!-- Table Body -->
+                    <tbody id="tableBody" class="text-gray-600 text-sm font-light">
+                        <tr id="loader">
+                            <td colspan="19" class="text-center py-10">
+                                <i class="fa-solid fa-spinner fa-spin text-3xl text-blue-600"></i>
+                                <p class="mt-2 text-gray-500 font-medium">Loading Data...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
